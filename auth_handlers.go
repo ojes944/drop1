@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -29,9 +30,11 @@ func SignUpHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid request", http.StatusBadRequest)
 		return
 	}
+	fmt.Println(req)
 	hash, _ := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	err := db.CreateUser(req.Email, string(hash), req.Name)
 	if err != nil {
+		fmt.Println("Error creating user:", err)
 		http.Error(w, "user exists", http.StatusConflict)
 		return
 	}

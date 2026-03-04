@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/spf13/viper"
+
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 
@@ -13,6 +15,18 @@ import (
 )
 
 func main() {
+	viper.SetConfigFile(".env")
+	viper.AutomaticEnv()
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Printf("No .env file found or error reading .env: %v", err)
+	}
+
+	// Set environment variables from viper
+	for _, key := range viper.AllKeys() {
+		os.Setenv(key, viper.GetString(key))
+	}
+
 	db.Init()
 	db.InitRedis()
 

@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:18.1-alpine3.23 
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: daniel@@1
+      POSTGRES_DB: drop
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:8-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+
+  app:
+    build: .
+    command: go run main.go
+    environment:
+      POSTGRES_DSN: "host=db user=root password=daniel@@1 dbname=drop sslmode=disable"
+      REDIS_ADDR: "redis:6379"
+      REDIS_PASSWORD: ""
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    working_dir: /app
+
+volumes:
+  db_data:
+  redis_data:

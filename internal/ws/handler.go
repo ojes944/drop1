@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"internal/db"
+	"github.com/ojes944/drop1/internal/db"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/websocket"

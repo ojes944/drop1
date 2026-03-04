@@ -64,7 +64,7 @@ signupForm.onsubmit = async e => {
   const password = document.getElementById('signup-password').value;
   const res = await fetch(`${API_URL}/signup`, {
     method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({name, email, password})
+    body: JSON.stringify({email, password, name})
   });
   if (res.ok) {
     userName = name;
