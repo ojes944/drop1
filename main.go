@@ -8,8 +8,8 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 
-	"drop1/internal/db"
-	"drop1/internal/ws"
+	"github.com/ojes944/drop1/internal/db"
+	"github.com/ojes944/drop1/internal/ws"
 )
 
 func main() {

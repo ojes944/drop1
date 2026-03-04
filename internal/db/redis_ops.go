@@ -12,15 +12,16 @@ func SetDriverLocation(driverID string, lat, lng float64) error {
 		Name:      driverID,
 		Longitude: lng,
 		Latitude:  lat,
-	})
+	}).Err()
 }
 
 func GetNearbyDrivers(lat, lng, radius float64) ([]redis.GeoLocation, error) {
-	return Redis.GeoRadius(context.Background(), "drivers", lng, lat, &redis.GeoRadiusQuery{
+	res, err := Redis.GeoRadius(context.Background(), "drivers", lng, lat, &redis.GeoRadiusQuery{
 		Radius:    radius,
 		Unit:      "m",
 		WithCoord: true,
-	})
+	}).Result()
+	return res, err
 }
 
 func SetResetToken(userID, token string, expiry time.Duration) error {

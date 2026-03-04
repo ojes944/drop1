@@ -1,10 +1,11 @@
 package main
 
 import (
-	"drop1/internal/db"
 	"encoding/json"
 	"net/http"
 	"time"
+
+	"github.com/ojes944/drop1/internal/db"
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -58,6 +59,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	})
 	tokenStr, _ := token.SignedString(jwtSecret)
 	json.NewEncoder(w).Encode(AuthResponse{Token: tokenStr})
+	println(name)
 }
 
 func ResetPasswordHandler(w http.ResponseWriter, r *http.Request) {
