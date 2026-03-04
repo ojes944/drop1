@@ -21,9 +21,11 @@ services:
     volumes:
       - redis_data:/data
 
+
+
   app:
     build: .
-    command: go run main.go
+    # command: go run main.go
     environment:
       POSTGRES_DSN: "host=db user=root password=daniel@@1 dbname=drop sslmode=disable"
       REDIS_ADDR: "redis:6379"
@@ -34,10 +36,14 @@ services:
     depends_on:
       - db
       - redis
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
     working_dir: /app
 
 volumes:
   db_data:
   redis_data:
+
+
+
+ 

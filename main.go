@@ -31,6 +31,9 @@ func main() {
 	db.InitRedis()
 
 	r := mux.NewRouter()
+	r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello, Docker is working!"))
+	}).Methods("GET")
 	r.HandleFunc("/api/signup", SignUpHandler).Methods("POST")
 	r.HandleFunc("/api/login", LoginHandler).Methods("POST")
 	r.HandleFunc("/api/reset_password", ResetPasswordHandler).Methods("POST")
